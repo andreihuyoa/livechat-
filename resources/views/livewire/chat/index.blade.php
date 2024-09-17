@@ -9,7 +9,7 @@
     <div class="m-auto text-center justify-center flex flex-col gap-3">
 
       <h4 class="font-medium text-lg">Choose a conversation to start chatting</h4>
-
+      {{-- <livewire:chat.chat-box> --}}
     </div>
 
   </div>

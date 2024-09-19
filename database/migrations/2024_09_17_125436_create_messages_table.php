@@ -14,11 +14,11 @@ return new class extends Migration {
       $table->id();
       $table->foreignId('conversation_id')->constrained();
 
-      $table->unsignedBigInteger('sender_id '); // or uuid()
-      $table->foreignId('sender_id ')->references('id')->on('users');
+      $table->unsignedBigInteger('sender_id'); // or uuid()
+      $table->foreign('sender_id')->references('id')->on('users');
 
       $table->unsignedBigInteger('receiver_id');
-      $table->foreignId('receiver_id')->references('id')->on('users');
+      $table->foreign('receiver_id')->references('id')->on('users');
 
       $table->timestamp('read_at')->nullable();
 

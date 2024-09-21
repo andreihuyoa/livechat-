@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Chat;
+namespace App\Livewire\Chat;
 
 use Livewire\Component;
 

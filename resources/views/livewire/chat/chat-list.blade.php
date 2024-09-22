@@ -25,20 +25,47 @@
   <main class="overflow-y-scroll overflow-hidden grow h-full relative" style="contain:content">
     {{-- Chat list --}}
     <ul class="p-2 grid w-full space-y-2">
+
+      @if ($conversations)
+
+      {{--
+      yung key sa foreach is for the pics tho its randomizing every page load
+      --}}
+      @foreach ($conversations as $key => $conversation )
+
       <li
         class="py-3 hover:bg-gray-50 rounded-2xl dark:hover:bg-gray-700 transition-colors duration-150 flex gap-4 relative w-full cursor-pointer px-2">
+        {{--
+        this class is not being rendered, throws an id error di niya mahanap yung selectedConversation->id
+
+        {{$conversation->id == $selectedConversation->id ? 'bg-gray-100/70':''}}
+        --}}
+
         <a href="#" class="shrink-0">
-          <x-avatar />
+          <x-avatar src="https://loremflickr.com/500/500/face,male,girl?-{{$key}}" />
         </a>
+
         <aside class="grid grid-cols-12 w-full">
-          <a href="#"
+
+          {{-- Redirects to the actual chat conversation --}}
+          <a href="{{route('chat',$conversation->id)}}"
             class="col-span-11 border-b pb-2 border-gray-200 relative overflow-hidden truncate leading-5 w-full flex-nowrap p-1">
+
             {{-- Name and Date --}}
+
             <div class="flex justify-between w-full items-center">
-              <h6 class="truncate font-medium tracking-normal text-gray-500">Andrei Huyo-a</h6>
-              <small class="text-gray-700">5d</small>
+              <h6 class="truncate font-medium tracking-normal text-gray-900">
+                {{-- gets the user name from conversation model --}}
+                {{$conversation->getReceiver()->name}}
+              </h6>
+              <small class="text-gray-700">
+                {{-- Date, yung ? is conditional kaya di nag rereturn ng error --}}
+                {{$conversation->messages?->last()?->created_at?->shortAbsoluteDiffForHumans()}}
+              </small>
             </div>
+
             {{-- Message body --}}
+
             <div class="flex gap-x-2 items-center">
               {{-- Double tick --}}
               <span>
@@ -117,7 +144,11 @@
           </div>
         </aside>
       </li>
+      @endforeach
 
+      @else
+
+      @endif
     </ul>
   </main>
 </div>

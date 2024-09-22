@@ -33,6 +33,7 @@ class Users extends Component
     ]);
     return redirect()->route('chat', ['query' => $createdConversation->id]);
   }
+  
   public function render()
   {
     return view('livewire.users', ['users' => User::where('id', '!=', auth()->id())->get()]);

@@ -14,7 +14,13 @@
         {{-- Avatar --}}
         <div class="shrink-0">
           <x-avatar class="h-9 w-9 lg:w-11 lg:h-11 " />
-          <h6 class="font-bold truncate">{{fake()->name()}}</h6>
+          {{-- Gets the email of the Receiver --}}
+          <h6 class="font-bold truncate">
+            {{-- this is throwing an error, tho yesterday its fkin working --}}
+            {{-- {{$selectedConversation->getReceiver()->email}}
+             --}}
+
+          </h6>
         </div>
       </div>
     </header>
@@ -77,23 +83,36 @@
     {{-- Send Message --}}
     <footer class="shrink-0 z-10 bg-white inset-x-0">
       <div class="p-2 border-t">
-        <form autocapitalize="off" method="POST">
-          @csrf
+        <form
+          {{-- entangle allows us to link properties between alpine and livewire --}}
+          x-data="{body:@entangle('body').defer}"
+          {{-- this is alpine --}}
+          @submit.prevent="$wire.sendMessage"
+          autocapitalize="off" method="POST">
 
+          @csrf
           <input type="hidden" autocomplete="false" style="display:none">
 
           <div class="grid grid-cols-12">
-            <input type="text" autocomplete="off" autofocus placeholder="Write your message here" maxlength="1700"
-              class="col-span-10 bg-gray-100 border-0 outline-0 focus:border-0 focus:ring-0 hover:ring-0 rounded-lg focus:outline-none">
+            <input
+            x-model="body"
+            type="text"
+            autocomplete="off" autofocus
+            placeholder="Write your message here" maxlength="1700"
+            class="col-span-10 bg-gray-100 border-0 outline-0 focus:border-0 focus:ring-0 hover:ring-0 rounded-lg focus:outline-none">
           </div>
 
-          <button type="submit" class="col-span-2">Send</button>
+          {{-- if body is empty, button will be disabled --}}
+          <button
+          x-bind:disabled="!body.trim()"
+          type="submit" class="col-span-2">Send</button>
 
         </form>
 
         @error('body')
         <p>{{$message}}</p>
         @enderror
+
       </div>
     </footer>
   </div>

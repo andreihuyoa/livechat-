@@ -38,18 +38,13 @@
 
       @if ($conversations)
 
-
-
       @foreach ($conversations as $key => $conversation)
 
-      <li id="convesation-{{$conversation->id}}" wire:key='{{$conversation->id}}'
+      <li id="conversation-{{$conversation->id}}" wire:key="{{$conversation->id}}"
         class="py-3 hover:bg-gray-50 rounded-2xl dark:hover:bg-gray-700 transition-colors duration-150 flex gap-4 relative w-full cursor-pointer px-2">
         {{--
-        this class is not being rendered, throws an id error di niya mahanap yung selectedConversation->id
-
-        this basically just highlights the currently open conversation
-
-        {{$conversation->id == $selectedConversation->id ? 'bg-gray-100/70':''}}
+        Still throws an error about id in class
+        {{$conversation->id == $selectedConversation?->id ? 'bg-gray-100/70':''}}
         --}}
 
         <a href="#" class="shrink-0">
